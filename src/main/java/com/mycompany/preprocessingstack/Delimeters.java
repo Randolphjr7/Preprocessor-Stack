@@ -10,15 +10,17 @@ import java.util.Stack;
  */
 public class Delimeters {
 
-        private Stack<Object> stk;
+        private Stack<Object> stkParenthesis, stkCurlyBraces, stkSquareBrackets;
 	private String expression;
 	private int length;
 		    
 	public Delimeters(String expression)
 	{
-		stk = new Stack<Object>();
-		this.expression = expression;
-		this.length = expression.length();
+            stkParenthesis    = new Stack<Object>();
+            stkCurlyBraces    = new Stack<Object>();
+            stkSquareBrackets = new Stack<Object>();            
+            this.expression = expression;
+            this.length = expression.length();
 	}
 
 	boolean isBalance() // Determine if parentheses are balanced
@@ -28,14 +30,25 @@ public class Delimeters {
 		
 		try
 		{
-			while (index < length && !fail)
-			{
-				char ch = expression.charAt(index);
+                    
+                    while (index < length && !fail)
+                    {
+			char ch = expression.charAt(index);
 				
-				if (ch ==  Constants.LEFT_NORMAL)
-						stk.push(ch);
-				else if (ch ==  Constants.RIGHT_NORMAL)	
-						stk.pop();
+                            // Put on corresponding Stacks if delimeter found
+                            if (ch == Constants.LEFT_PAREN)
+				stkParenthesis.push(ch);
+                                        
+                            else if (ch == Constants.RIGHT_PAREN)	
+                                stkParenthesis.pop();
+                            else if (ch == Constants.LEFT_CURLY)
+                                stkCurlyBraces.push(ch);
+                            else if (ch == Constants.RIGHT_CURLY)
+                                stkCurlyBraces.pop();
+                            else if (ch == Constants.LEFT_BRACKET)
+                                stkSquareBrackets.push(ch);
+                            else if (ch == Constants.RIGHT_BRACKET)
+                                stkSquareBrackets.pop();
 				index++;
 			}//end of while
 		}//end of try 
@@ -44,6 +57,9 @@ public class Delimeters {
 			System.out.println(e.toString()); 
 			fail = true;
 		}
-		return (stk.empty() && !fail);
+		return (!fail && 
+                        stkParenthesis.empty() && 
+                        stkCurlyBraces.empty() && 
+                        stkSquareBrackets.empty());
 	}    
 }
