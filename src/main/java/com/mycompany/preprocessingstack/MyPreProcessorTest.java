@@ -23,8 +23,9 @@ public class MyPreProcessorTest {
         boolean done = false;
         BasicFile f = null;
         Delimeters a = null;
+        String stringFile = null;
         
-        display("This is a Program that checks if your Java program is syntactically correct");
+        display("This is a Program that checks if your Java program is syntactically correct", JOptionPane.INFORMATION_MESSAGE);
 
         while(!done)
         {
@@ -36,7 +37,7 @@ public class MyPreProcessorTest {
                 switch(i)
                 {
                     case 1:
-                       String stringFile = new Scanner(new File("inputTestFile.txt")).useDelimiter("\\Z").next();
+                       stringFile = new Scanner(new File("inputTestFile.txt")).useDelimiter("\\Z").next();
                         a = new Delimeters(stringFile);
                             if (a.isBalance()) {
                                 System.out.println(stringFile + "  --> is valid - with respect to delimeters\n");
@@ -61,15 +62,28 @@ public class MyPreProcessorTest {
                         break;
                     case 3:
                         f = new BasicFile();
-                        /*
-                        Under Construction
-                        */
-                            break;
+                        
+                        if(f.getSelectedFile() == null) {
+                            display("Please choose a file", JOptionPane.ERROR_MESSAGE);
+                        } 
+                        else {
+                            stringFile = new Scanner(new File(f.getName())).useDelimiter("\\Z").next();
+                            a = new Delimeters(stringFile);
+                            if (a.isBalance()) {
+                                System.out.println(stringFile + "  --> is valid - with respect to delimeters\n");
+                                display(stringFile, "File is Valid", JOptionPane.INFORMATION_MESSAGE);
+                            }
+                            else {
+                                System.out.println(stringFile + "  --> is invalid - with respect to delimeters\n");
+                                display(stringFile, "File is Invalid", JOptionPane.ERROR_MESSAGE);
+                            } 
+                        }
+                        break;
                     case 4:
                         done = true;
                         break;
                     default:
-                        display("This option is undefined");
+                        display("This option is undefined", JOptionPane.INFORMATION_MESSAGE);
                     break;
                 }
             }
@@ -81,8 +95,8 @@ public class MyPreProcessorTest {
         
     }
     
-    static void display(String s) { 
-        JOptionPane.showMessageDialog(null, s, "Java Preprocessor Check", JOptionPane.INFORMATION_MESSAGE);  
+    static void display(String s, int MESSAGE_TYPE) { 
+        JOptionPane.showMessageDialog(null, s, "Java Preprocessor Check", MESSAGE_TYPE);  
     }
     
     static void display(String s, String heading, int MESSAGE_TYPE) {

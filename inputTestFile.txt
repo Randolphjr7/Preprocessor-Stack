@@ -1,7 +1,7 @@
 Hello World! This is a TestFile
 
 
-int x = 3 + (10 – 4) * ( 10 + 4)
+int x = 3 + (10 - 4) * ( 10 + 4)
 
 public void display(int n) 
 { 

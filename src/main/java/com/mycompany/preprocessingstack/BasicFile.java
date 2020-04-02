@@ -18,7 +18,6 @@ import javax.swing.JTextArea;
  */
 public class BasicFile {
     
-    String result;
     File f;
     
     public BasicFile() {
@@ -49,6 +48,14 @@ public class BasicFile {
         }
     }
     
+    String getName() {
+        return f.getName();
+    }
+    
+    File getSelectedFile() {
+        return f.getAbsoluteFile();
+    }
+    
     void listRecursive(File dir) {
         if(dir.isDirectory()) {
             File [] x = dir.listFiles();
@@ -73,6 +80,8 @@ public class BasicFile {
     void display(String msg, String s, int t) {
         JOptionPane.showMessageDialog(null, msg, s, t);
     }
+    
+   
     
     // reads data from a file, then appends to another file
     void append() {
@@ -103,7 +112,7 @@ public class BasicFile {
         }
     }
     
-        // reads data from a file, then appends to another file
+    // reads data from a file, then overwrites to another file
     void overwrite() {
         
         FileOutputStream fos = null;
@@ -112,13 +121,13 @@ public class BasicFile {
             DataInputStream dis = 
                     new DataInputStream(new FileInputStream(f.getPath()));
       
-            fos = new FileOutputStream("a2.text");
+            fos = new FileOutputStream("outputSample.text");
             
             int length = dis.available(); // available stream to be read
             byte[] buf = new byte[length]; // create buffer
             dis.readFully(buf); // read the full data into the buffer
             
-            display("a2.text", "File is being overwritten", 
+            display("outputSample.text", "File is being overwritten", 
                     JOptionPane.INFORMATION_MESSAGE);
             
             fos.write(buf, 0, buf.length);
@@ -158,48 +167,9 @@ public class BasicFile {
         return f.getParent();
     }
     
-    String exists() {
-        return (f.exists())? "The physical file exists" : "The physical file "
-                + "does not exist";
-    }
-    
-    
-    void unbufferedTime() throws IOException {
-        
-        FileInputStream fis = new FileInputStream(f);
-        System.out.println("\n"+ f.getName() + "-" + f.length() + " bytes");
-        
-        long startTime = System.nanoTime();
-        
-        while(fis.read() != -1) {
-            
-        }
-           
-        long endTime = System.nanoTime();
-        result = ("Time elapse when unbuffered " + (endTime - startTime
-                /1000000.0 + " msec"));
-        
-        
-        display(result, f.getName(), JOptionPane.INFORMATION_MESSAGE);
-    }
-    
-    void bufferedTime() throws IOException {
-        
-        BufferedInputStream bis = new BufferedInputStream(new FileInputStream(f)
-        , 4096);
-        
-        System.out.println("\n" + f.getName() + "-" + f.length() + " bytes");
-        long startTime = System.nanoTime();
-        
-        while(bis.read() != -1) {
-            
-        }
-         
-        long endTime = System.nanoTime();
-        result = ("Time elapsed when buffered " + (endTime - startTime)
-        /1000000.0 + " msec");
-        
-        display(result, f.getName(), JOptionPane.INFORMATION_MESSAGE);
-    }
+//    String exists() {
+//        return (f.exists())? "The physical file exists" : "The physical file "
+//                + "does not exist";
+//    }
     
 }
