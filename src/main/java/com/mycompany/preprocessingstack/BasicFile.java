@@ -36,7 +36,7 @@ public class BasicFile {
                 throw new FileNotFoundException();
             }
             
-            display(f.getName(), "File has been choosen", 
+            display(f.getName(), "File has been chosen", 
                     JOptionPane.INFORMATION_MESSAGE);
                     
         }
